@@ -92,7 +92,7 @@ namespace ConsoleApp1
             if (nV.Length != prms.Length)
             {
                 Console.WriteLine("Incorrect data! Try again.");
-                goto loopTheta;
+                goto loopV;
             }
             for (int i = 0; i < nV.Length; i++)
                 if (!Double.TryParse(prms[i], out nV[i]))
