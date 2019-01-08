@@ -13,41 +13,50 @@ namespace ConsoleApp1
             double phi0, h0, lambda0, vn0, vh0, ve0, psi0, theta0, gama0;
 
             #region Ввод начальных данных
-            Console.WriteLine("Initial value of latitude:");
-            if (!Double.TryParse(Console.ReadLine(), out phi0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of latitude:");
+            } while (!Double.TryParse(Console.ReadLine(), out phi0));
 
-            Console.WriteLine("Initial value of longitude:");
-            if (!Double.TryParse(Console.ReadLine(), out lambda0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of longitude:");
+            } while (!Double.TryParse(Console.ReadLine(), out lambda0));
 
-            Console.WriteLine("Initial value of height:");
-            if (!Double.TryParse(Console.ReadLine(), out h0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of height:");
+            } while (!Double.TryParse(Console.ReadLine(), out h0));
 
-            Console.WriteLine("Initial value of north velocity component:");
-            if (!Double.TryParse(Console.ReadLine(), out vn0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of north velocity component:");
+            } while (!Double.TryParse(Console.ReadLine(), out vn0));
 
-            Console.WriteLine("Initial value of vertical velocity component:");
-            if (!Double.TryParse(Console.ReadLine(), out vh0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of vertical velocity component:");
+            } while (!Double.TryParse(Console.ReadLine(), out vh0));
 
-            Console.WriteLine("Initial value of east velocity component:");
-            if (!Double.TryParse(Console.ReadLine(), out ve0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of east velocity component:");
+            } while (!Double.TryParse(Console.ReadLine(), out ve0));
 
-            Console.WriteLine("Initial value of course angle:");
-            if (!Double.TryParse(Console.ReadLine(), out psi0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of course angle:");
+            } while (!Double.TryParse(Console.ReadLine(), out psi0));
 
-            Console.WriteLine("Initial value of pitch angle:");
-            if (!Double.TryParse(Console.ReadLine(), out theta0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of pitch angle:");
+            } while (!Double.TryParse(Console.ReadLine(), out theta0));
 
-            Console.WriteLine("Initial value of roll angle:");
-            if (!Double.TryParse(Console.ReadLine(), out gama0))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Initial value of roll angle:");
+            } while (!Double.TryParse(Console.ReadLine(), out gama0));
             #endregion
 
             ConsumerParameters initial = new ConsumerParameters(phi0, h0, lambda0, vn0, vh0, ve0, psi0, theta0, gama0);
@@ -60,31 +69,47 @@ namespace ConsoleApp1
             double dt, tEx;
 
             #region Ввод начальных данных для циклической части алгоритма
+            loopTheta:
             Console.WriteLine("Increment of the angle of apparent rotation (like \"x y z\"):");
             string s = Console.ReadLine();
             string[] prms = s.Split(' ');
             if (nTheta.Length != prms.Length)
-                throw new InvalidOperationException();
+            {
+                Console.WriteLine("Incorrect data! Try again.");
+                goto loopTheta;
+            }
             for (int i = 0; i < nTheta.Length; i++)
                 if (!Double.TryParse(prms[i], out nTheta[i]))
-                    throw new FormatException();
+                {
+                    Console.WriteLine("Incorrect data! Try again.");
+                    goto loopTheta;
+                }
 
+            loopV:
             Console.WriteLine("Increment of apparent velocity vector (like \"x y z\"):");
             s = Console.ReadLine();
             prms = s.Split(' ');
             if (nV.Length != prms.Length)
-                throw new InvalidOperationException();
+            {
+                Console.WriteLine("Incorrect data! Try again.");
+                goto loopTheta;
+            }
             for (int i = 0; i < nV.Length; i++)
                 if (!Double.TryParse(prms[i], out nV[i]))
-                    throw new FormatException();
+                {
+                    Console.WriteLine("Incorrect data! Try again.");
+                    goto loopV;
+                }
 
-            Console.WriteLine("Time between updates:");
-            if (!Double.TryParse(Console.ReadLine(), out dt))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Time between updates:");
+            } while (!Double.TryParse(Console.ReadLine(), out dt));
 
-            Console.WriteLine("Exit time:");
-            if (!Double.TryParse(Console.ReadLine(), out tEx))
-                throw new FormatException();
+            do
+            {
+                Console.WriteLine("Exit time:");
+            } while (!Double.TryParse(Console.ReadLine(), out tEx));
             #endregion
 
             fins.Go(nTheta, nV, dt, tEx, consumerParameters);
